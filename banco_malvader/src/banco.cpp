@@ -1,5 +1,5 @@
 #include "banco.h"
-#include "io.h"       // Para ler_linha
+#include "io.h"
 #include <stdio.h>    // Para printf, fopen, fclose, fprintf, sscanf
 #include <string.h>   // Para strcpy, strcmp, strcspn
 #include <stdlib.h>   // Para atof (se usar para converter saldo de string)
