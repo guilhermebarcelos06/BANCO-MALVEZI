@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h> // Para exit
 #include <string.h> // Para strcmp
+#include <locale.h>
 
 #include "banco.h"
 #include "io.h"
@@ -18,6 +19,7 @@ void lidar_consultar_cliente(const Banco* b);
 
 
 int main(void) {
+	setlocale(LC_ALL, "Portuguese");
     Banco meu_banco;
     // Nomes dos arquivos de persist√™ncia
     const char* arq_clientes = "data/clientes.txt";
@@ -60,7 +62,7 @@ int main(void) {
                 printf("Saindo do Banco Malvader. Salvando dados...\n");
                 break;
             default:
-                printf("Op√ß√£o inv√°lida. Tente novamente.\n");
+                printf("OpÁ„o inv·lida. Tente novamente.\n");
                 break;
         }
         printf("\nPressione ENTER para continuar...");
@@ -82,12 +84,12 @@ void exibir_menu(void) {
     printf("2. Encerrar conta\n");
     printf("3. Consultar dados do cliente\n");
     printf("4. Alterar dados do cliente\n");
-    printf("5. Realizar dep√≥sito\n");
+    printf("5. Realizar deposito\n");
     printf("6. Realizar saque\n");
     printf("7. Listar todos os clientes\n");
     printf("8. Listar clientes (Ordenado por Nome)\n");
     printf("0. Sair\n");
-    printf("Escolha uma op√ß√£o: ");
+    printf("Escolha uma opÁ„o: ");
 }
 
 int ler_opcao(void) {
@@ -113,11 +115,12 @@ void lidar_abrir_conta(Banco* b) {
     printf("Nome completo: ");
     ler_linha(novo.nome, sizeof(novo.nome));
 
-    printf("CPF (apenas n√∫meros): ");
+    printf("CPF (apenas n˙meros): ");
     ler_linha(novo.cpf, sizeof(novo.cpf));
-
-    printf("N√∫mero da Conta: "); // Simples por enquanto, sem gera√ß√£o autom√°tica
-    ler_linha(novo.conta, sizeof(novo.conta));
+	
+	int proximo_numero = (int)b->clientes.tam + 1;
+    gerar_numero_conta(novo.conta, proximo_numero);
+    printf("N˙mero da Conta gerado: %s\n", novo.conta);
 
     printf("Senha: ");
     ler_linha(novo.senha, sizeof(novo.senha));
@@ -128,10 +131,10 @@ void lidar_abrir_conta(Banco* b) {
     printf("Telefone: ");
     ler_linha(novo.telefone, sizeof(novo.telefone));
 
-    printf("Endere√ßo (Rua, N√∫mero): ");
+    printf("EndereÁo (Rua, Numero): ");
     ler_linha(novo.endereco, sizeof(novo.endereco));
 
-    printf("N√∫mero da Casa: ");
+    printf("Numero da Casa: ");
     ler_linha(novo.numero_casa, sizeof(novo.numero_casa));
 
     printf("Bairro: ");
@@ -140,7 +143,7 @@ void lidar_abrir_conta(Banco* b) {
     printf("CEP: ");
     ler_linha(novo.cep, sizeof(novo.cep));
 
-    printf("Local (Ponto de refer√™ncia): ");
+    printf("Local (Ponto de referÍncia): ");
     ler_linha(novo.local, sizeof(novo.local));
 
     printf("Cidade: ");
@@ -161,11 +164,11 @@ void lidar_abrir_conta(Banco* b) {
 void lidar_encerrar_conta(Banco* b) {
     char conta[16];
     printf("\n--- Encerrar Conta ---\n");
-    printf("Digite o n√∫mero da conta a ser encerrada: ");
+    printf("Digite o n˙mero da conta a ser encerrada: ");
     ler_linha(conta, sizeof(conta));
 
     if (banco_encerrar_conta(b, conta)) {
-        printf("Opera√ß√£o de encerramento de conta conclu√≠da.\n");
+        printf("OperaÁ„o de encerramento de conta concluida.\n");
     } else {
         printf("Falha ao encerrar conta.\n");
     }
@@ -174,21 +177,21 @@ void lidar_encerrar_conta(Banco* b) {
 void lidar_depositar(Banco* b) {
     char conta[16];
     double valor;
-    printf("\n--- Realizar Dep√≥sito ---\n");
-    printf("Digite o n√∫mero da conta: ");
+    printf("\n--- Realizar Deposito ---\n");
+    printf("Digite o n˙mero da conta: ");
     ler_linha(conta, sizeof(conta));
-    printf("Digite o valor do dep√≥sito: ");
+    printf("Digite o valor do deposito: ");
     if (scanf("%lf", &valor) != 1) {
-        printf("Valor inv√°lido.\n");
+        printf("Valor inv·lido.\n");
         while (getchar() != '\n'); // Limpa buffer
         return;
     }
     while (getchar() != '\n'); // Limpa buffer
 
     if (banco_depositar(b, conta, valor)) {
-        printf("Dep√≥sito realizado com sucesso.\n");
+        printf("Deposito realizado com sucesso.\n");
     } else {
-        printf("Falha ao realizar dep√≥sito.\n");
+        printf("Falha ao realizar deposito.\n");
     }
 }
 
@@ -196,11 +199,11 @@ void lidar_sacar(Banco* b) {
     char conta[16];
     double valor;
     printf("\n--- Realizar Saque ---\n");
-    printf("Digite o n√∫mero da conta: ");
+    printf("Digite o n˙mero da conta: ");
     ler_linha(conta, sizeof(conta));
     printf("Digite o valor do saque: ");
     if (scanf("%lf", &valor) != 1) {
-        printf("Valor inv√°lido.\n");
+        printf("Valor invalido.\n");
         while (getchar() != '\n'); // Limpa buffer
         return;
     }
@@ -218,7 +221,7 @@ void lidar_sacar(Banco* b) {
 void lidar_consultar_cliente(const Banco* b) {
     char termo_busca[100];
     printf("\n--- Consultar Cliente ---\n");
-    printf("Deseja buscar por CPF (1) ou N√∫mero da Conta (2)? ");
+    printf("Deseja buscar por CPF (1) ou N˙mero da Conta (2)? ");
     int tipo_busca = ler_opcao();
     int idx = -1;
 
@@ -227,17 +230,17 @@ void lidar_consultar_cliente(const Banco* b) {
         ler_linha(termo_busca, sizeof(termo_busca));
         idx = lista_clientes_buscar_por_cpf(&b->clientes, termo_busca);
     } else if (tipo_busca == 2) {
-        printf("Digite o N√∫mero da Conta do cliente: ");
+        printf("Digite o N˙mero da Conta do cliente: ");
         ler_linha(termo_busca, sizeof(termo_busca));
         idx = lista_clientes_buscar_por_conta(&b->clientes, termo_busca);
     } else {
-        printf("Op√ß√£o de busca inv√°lida.\n");
+        printf("OpÁ„o de busca inv·lida.\n");
         return;
     }
 
     if (idx != -1) {
         imprimir_dados_cliente(&b->clientes.dados[idx]);
     } else {
-        printf("Cliente n√£o encontrado.\n");
+        printf("Cliente n„o encontrado.\n");
     }
 }

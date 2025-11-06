@@ -20,7 +20,7 @@ int lista_clientes_add(ListaClientes* L, Cliente c) {
         Cliente* temp = (Cliente*)realloc(L->dados, nova_capacidade * sizeof(Cliente));
 
         if (temp == NULL) {
-            fprintf(stderr, "Erro: Falha ao realocar memória para a lista de clientes.\n");
+            fprintf(stderr, "Erro: Falha ao realocar memoria para a lista de clientes.\n");
             return 0; // Falha na alocação
         }
         L->dados = temp;

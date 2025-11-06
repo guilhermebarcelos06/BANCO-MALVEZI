@@ -48,17 +48,17 @@ void banco_free(Banco* b) {
 int banco_abrir_conta(Banco* b, Cliente novo_cliente) {
     // Verificar se o CPF já existe
     if (lista_clientes_buscar_por_cpf(&b->clientes, novo_cliente.cpf) != -1) {
-        fprintf(stderr, "Erro: Cliente com CPF %s já existe.\n", novo_cliente.cpf);
+        fprintf(stderr, "Erro: Cliente com CPF %s ja existe.\n", novo_cliente.cpf);
         return 0;
     }
     // Verificar se a conta já existe
     if (lista_clientes_buscar_por_conta(&b->clientes, novo_cliente.conta) != -1) {
-        fprintf(stderr, "Erro: Número da conta %s já está em uso.\n", novo_cliente.conta);
+        fprintf(stderr, "Erro: Numero da conta %s ja esta em uso.\n", novo_cliente.conta);
         return 0;
     }
 
     if (!lista_clientes_add(&b->clientes, novo_cliente)) {
-        fprintf(stderr, "Erro: Falha ao adicionar novo cliente à lista.\n");
+        fprintf(stderr, "Erro: Falha ao adicionar novo cliente a� lista.\n");
         return 0;
     }
     printf("Conta aberta com sucesso para %s.\n", novo_cliente.nome);
@@ -69,7 +69,7 @@ int banco_abrir_conta(Banco* b, Cliente novo_cliente) {
 int banco_encerrar_conta(Banco* b, const char* conta) {
     int idx = lista_clientes_buscar_por_conta(&b->clientes, conta);
     if (idx == -1) {
-        fprintf(stderr, "Erro: Conta %s não encontrada.\n", conta);
+        fprintf(stderr, "Erro: Conta %s nao encontrada.\n", conta);
         return 0;
     }
 
@@ -249,4 +249,7 @@ int registrar_movimento(const char* arq_movimentos, const char* conta, const cha
 
     fclose(f);
     return 1;
+}
+void gerar_numero_conta(char destino[], int novo_numero) {
+    sprintf(destino, "%04d", novo_numero); 
 }

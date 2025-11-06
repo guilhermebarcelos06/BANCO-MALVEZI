@@ -41,5 +41,6 @@ int carregar_clientes(const char* arq, ListaClientes* L);
 // Função para registrar movimentos
 int registrar_movimento(const char* arq_movimentos, const char* conta, const char* tipo, double valor, double saldo_apos);
 
+void gerar_numero_conta(char destino[], int novo_numero);
 
 #endif // BANCO_H
