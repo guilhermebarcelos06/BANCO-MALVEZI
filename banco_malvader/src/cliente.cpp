@@ -13,13 +13,13 @@ Cliente novo_cliente_padrao(void) {
 
 void imprimir_dados_cliente(const Cliente* c) {
     printf("--- Dados do Cliente ---\n");
-    printf("Ag�ncia: %s\n", c->agencia);
+    printf("Agencia: %s\n", c->agencia);
     printf("Conta: %s\n", c->conta);
     printf("Nome: %s\n", c->nome);
     printf("CPF: %s\n", c->cpf);
     printf("Data Nasc.: %s\n", c->data_nasc);
     printf("Telefone: %s\n", c->telefone);
-    printf("Endere�o: %s, %s - %s, %s - %s/%s\n", c->endereco, c->numero_casa, c->bairro, c->local, c->cidade, c->estado);
+    printf("Endereco: %s, %s - %s, %s - %s/%s\n", c->endereco, c->numero_casa, c->bairro, c->local, c->cidade, c->estado);
     printf("CEP: %s\n", c->cep);
     printf("Saldo: %.2f\n", c->saldo);
     printf("Status: %s\n", c->ativo ? "Ativa" : "Encerrada");

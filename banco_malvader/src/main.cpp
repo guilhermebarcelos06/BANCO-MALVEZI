@@ -64,7 +64,7 @@ int main(void) {
                 printf("Saindo do Banco Malvader. Salvando dados...\n");
                 break;
             default:
-                printf("Opção inválida. Tente novamente.\n");
+                printf("Opcao invalida. Tente novamente.\n");
                 break;
         }
 
@@ -93,7 +93,7 @@ void exibir_menu(void) {
     printf("8. Listar clientes (Ordenado por Nome)\n");
     printf("9. Exibir extrato da conta\n");
     printf("0. Sair\n");
-    printf("Escolha uma opção: ");
+    printf("Escolha uma opcao: ");
 }
 
 int ler_opcao(void) {
@@ -118,12 +118,12 @@ void lidar_abrir_conta(Banco* b) {
     printf("Nome completo: ");
     ler_linha(novo.nome, sizeof(novo.nome));
 
-    printf("CPF (apenas números): ");
+    printf("CPF (apenas numeros): ");
     ler_linha(novo.cpf, sizeof(novo.cpf));
 
 	int proximo_numero = (int)b->clientes.tam + 1;
     gerar_numero_conta(novo.conta, proximo_numero);
-    printf("Número da Conta gerado: %s\n", novo.conta);
+    printf("Numero da Conta gerado: %s\n", novo.conta);
 
     printf("Senha: ");
     ler_linha(novo.senha, sizeof(novo.senha));
@@ -146,7 +146,7 @@ void lidar_abrir_conta(Banco* b) {
     printf("CEP: ");
     ler_linha(novo.cep, sizeof(novo.cep));
 
-    printf("Local (Ponto de referência): ");
+    printf("Local (Ponto de referencia): ");
     ler_linha(novo.local, sizeof(novo.local));
 
     printf("Cidade: ");
@@ -165,12 +165,12 @@ void lidar_abrir_conta(Banco* b) {
 void lidar_encerrar_conta(Banco* b) {
     char conta[16];
     printf("\n--- Encerrar Conta ---\n");
-    printf("Digite o número da conta a ser encerrada: ");
+    printf("Digite o numero da conta a ser encerrada: ");
     ler_linha(conta, sizeof(conta));
 
     int idx = lista_clientes_buscar_por_conta(&b->clientes, conta);
     if (idx == -1) {
-        printf("Erro: Conta %s não encontrada.\n", conta);
+        printf("Erro: Conta %s nao encontrada.\n", conta);
         return;
     }
 
@@ -179,7 +179,7 @@ void lidar_encerrar_conta(Banco* b) {
     ler_linha(senha_digitada, sizeof(senha_digitada));
 
     if (!banco_validar_senha(b, idx, senha_digitada)) {
-        printf("Senha incorreta. Operação cancelada.\n");
+        printf("Senha incorreta. Operacao cancelada.\n");
         return;
     }
 
@@ -194,16 +194,16 @@ void lidar_depositar(Banco* b) {
     char conta[16];
     double valor;
     printf("\n--- Realizar Deposito ---\n");
-    printf("Digite o número da conta: ");
+    printf("Digite o numero da conta: ");
     ler_linha(conta, sizeof(conta));
 
     int idx = lista_clientes_buscar_por_conta(&b->clientes, conta);
     if (idx == -1) {
-        printf("Erro: Conta %s não encontrada.\n", conta);
+        printf("Erro: Conta %s nao encontrada.\n", conta);
         return;
     }
     if (!b->clientes.dados[idx].ativo) {
-        fprintf(stderr, "Erro: Conta %s está inativa e não pode receber depósitos.\n", conta);
+        fprintf(stderr, "Erro: Conta %s esta inativa e nao pode receber depositos.\n", conta);
         return;
     }
 
@@ -212,7 +212,7 @@ void lidar_depositar(Banco* b) {
     ler_linha(senha_digitada, sizeof(senha_digitada));
 
     if (!banco_validar_senha(b, idx, senha_digitada)) {
-        printf("Senha incorreta. Operação cancelada.\n");
+        printf("Senha incorreta. Operacao cancelada.\n");
         return;
     }
 
@@ -224,7 +224,7 @@ void lidar_depositar(Banco* b) {
     if(comma) *comma = '.';
 
     if (sscanf(buffer_valor, "%lf", &valor) != 1) {
-        printf("Valor inválido.\n");
+        printf("Valor invalido.\n");
         return;
     }
 
@@ -239,17 +239,17 @@ void lidar_sacar(Banco* b) {
     char conta[16];
     double valor;
     printf("\n--- Realizar Saque ---\n");
-    printf("Digite o número da conta: ");
+    printf("Digite o numero da conta: ");
     ler_linha(conta, sizeof(conta));
 
     // --- VALIDAÇÃO DE SENHA ---
     int idx = lista_clientes_buscar_por_conta(&b->clientes, conta);
     if (idx == -1) {
-        printf("Erro: Conta %s não encontrada.\n", conta);
+        printf("Erro: Conta %s nao encontrada.\n", conta);
         return;
     }
     if (!b->clientes.dados[idx].ativo) {
-        fprintf(stderr, "Erro: Conta %s está inativa e não pode realizar saques.\n", conta);
+        fprintf(stderr, "Erro: Conta %s esta inativa e nao pode realizar saques.\n", conta);
         return;
     }
 
@@ -258,7 +258,7 @@ void lidar_sacar(Banco* b) {
     ler_linha(senha_digitada, sizeof(senha_digitada));
 
     if (!banco_validar_senha(b, idx, senha_digitada)) {
-        printf("Senha incorreta. Operação cancelada.\n");
+        printf("Senha incorreta. Operacao cancelada.\n");
         return;
     }
 
@@ -284,7 +284,7 @@ void lidar_sacar(Banco* b) {
 void lidar_consultar_cliente(const Banco* b) {
     char termo_busca[100];
     printf("\n--- Consultar Cliente ---\n");
-    printf("Deseja buscar por CPF (1) ou Número da Conta (2)? ");
+    printf("Deseja buscar por CPF (1) ou Numero da Conta (2)? ");
     int tipo_busca = ler_opcao();
     int idx = -1;
 
@@ -293,30 +293,30 @@ void lidar_consultar_cliente(const Banco* b) {
         ler_linha(termo_busca, sizeof(termo_busca));
         idx = lista_clientes_buscar_por_cpf(&b->clientes, termo_busca);
     } else if (tipo_busca == 2) {
-        printf("Digite o Número da Conta do cliente: ");
+        printf("Digite o Numero da Conta do cliente: ");
         ler_linha(termo_busca, sizeof(termo_busca));
         idx = lista_clientes_buscar_por_conta(&b->clientes, termo_busca);
     } else {
-        printf("Opção de busca inválida.\n");
+        printf("Opcao de busca invalida.\n");
         return;
     }
 
     if (idx != -1) {
         imprimir_dados_cliente(&b->clientes.dados[idx]);
     } else {
-        printf("Cliente não encontrado.\n");
+        printf("Cliente nao encontrado.\n");
     }
 }
 
 void lidar_alterar_dados_cliente(Banco* b) {
     char conta[16];
     printf("\n--- Alterar Dados do Cliente ---\n");
-    printf("Digite o número da conta: ");
+    printf("Digite o numero da conta: ");
     ler_linha(conta, sizeof(conta));
 
     int idx = lista_clientes_buscar_por_conta(&b->clientes, conta);
     if (idx == -1) {
-        printf("Erro: Conta %s não encontrada.\n", conta);
+        printf("Erro: Conta %s nao encontrada.\n", conta);
         return;
     }
 
@@ -326,7 +326,7 @@ void lidar_alterar_dados_cliente(Banco* b) {
     ler_linha(senha_digitada, sizeof(senha_digitada));
 
     if (!banco_validar_senha(b, idx, senha_digitada)) {
-        printf("Senha incorreta. Operação cancelada.\n");
+        printf("Senha incorreta. Operacao cancelada.\n");
         return;
     }
 
@@ -356,10 +356,10 @@ void lidar_alterar_dados_cliente(Banco* b) {
             banco_alterar_dados_cliente(b, idx, op_alterar, novo_valor);
             break;
         case 0:
-            printf("Alteração cancelada.\n");
+            printf("Alteracao cancelada.\n");
             break;
         default:
-            printf("Opção inválida.\n");
+            printf("Opcao invalida.\n");
             break;
     }
 }
@@ -367,12 +367,12 @@ void lidar_alterar_dados_cliente(Banco* b) {
 void lidar_exibir_extrato(Banco* b) {
     char conta[16];
     printf("\n--- Exibir Extrato ---\n");
-    printf("Digite o número da conta: ");
+    printf("Digite o numero da conta: ");
     ler_linha(conta, sizeof(conta));
 
     int idx = lista_clientes_buscar_por_conta(&b->clientes, conta);
     if (idx == -1) {
-        printf("Erro: Conta %s não encontrada.\n", conta);
+        printf("Erro: Conta %s nao encontrada.\n", conta);
         return;
     }
 
@@ -381,7 +381,7 @@ void lidar_exibir_extrato(Banco* b) {
     ler_linha(senha_digitada, sizeof(senha_digitada));
 
     if (!banco_validar_senha(b, idx, senha_digitada)) {
-        printf("Senha incorreta. Operação cancelada.\n");
+        printf("Senha incorreta. Operacao cancelada.\n");
         return;
     }
 

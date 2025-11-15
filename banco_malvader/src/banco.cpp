@@ -72,7 +72,7 @@ int banco_encerrar_conta(Banco* b, const char* conta) {
     }
 
     if (b->clientes.dados[idx].saldo != 0.0) {
-        fprintf(stderr, "Erro: Não é possível encerrar conta com saldo diferente de zero (%.2f).\n", b->clientes.dados[idx].saldo);
+        fprintf(stderr, "Erro: Nao e possível encerrar conta com saldo diferente de zero (%.2f).\n", b->clientes.dados[idx].saldo);
         return 0;
     }
 
@@ -83,7 +83,7 @@ int banco_encerrar_conta(Banco* b, const char* conta) {
 
 int banco_depositar(Banco* b, const char* conta, double valor) {
     if (valor <= 0) {
-        fprintf(stderr, "Erro: Valor de depósito deve ser positivo.\n");
+        fprintf(stderr, "Erro: Valor de deposito deve ser positivo.\n");
         return 0;
     }
 
@@ -91,7 +91,7 @@ int banco_depositar(Banco* b, const char* conta, double valor) {
     if (idx == -1) return 0;
 
     b->clientes.dados[idx].saldo += valor;
-    printf("Depósito de %.2f realizado na conta %s. Novo saldo: %.2f\n", valor, conta, b->clientes.dados[idx].saldo);
+    printf("Deposito de %.2f realizado na conta %s. Novo saldo: %.2f\n", valor, conta, b->clientes.dados[idx].saldo);
     registrar_movimento(b->arquivo_movimentos, conta, "DEPOSITO", valor, b->clientes.dados[idx].saldo);
     return 1;
 }
@@ -288,7 +288,7 @@ int salvar_clientes(const char* arq, const ListaClientes* L) {
 int carregar_clientes(const char* arq, ListaClientes* L) {
     FILE* f = fopen(arq, "r");
     if (!f) {
-        perror("Erro ao abrir arquivo de clientes para leitura (pode não existir ainda)");
+        perror("Erro ao abrir arquivo de clientes para leitura (pode nao existir ainda)");
         return 1;
     }
 
